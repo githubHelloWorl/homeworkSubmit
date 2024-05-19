@@ -1,0 +1,50 @@
+<template>
+	<div class="page_user" id="user_address">
+		<div class="warp">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-md-3">
+						<div class="card_menu">
+							<!-- 左侧边栏 -->
+							<list_admin_menu_user></list_admin_menu_user>
+						</div>
+					</div>
+					<div class="col-12 col-md-9">
+						<div class="card_addres pl-2">
+							<!-- 作业批改 -->
+							<div><span>作业批改</span></div>
+							<table_homework_correction v-if="$check_action('/homework_correction/table','get')"></table_homework_correction>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+
+<script>
+	import list_admin_menu_user from "@/components/diy/list_admin_menu_user.vue";
+	import table_homework_correction from "../../components/diy/table_homework_correction.vue";
+	export default {
+		data() {
+			return {
+			};
+		},
+		mounted() {
+		},
+		methods: {
+		},
+
+		components: {
+			list_admin_menu_user,
+			table_homework_correction,
+		},
+	};
+</script>
+
+<style scoped>
+	.container {
+		min-height: 800px;
+	}
+</style>

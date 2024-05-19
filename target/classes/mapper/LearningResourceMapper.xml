@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.demo.dao.LearningResourceMapper">
+
+    <select id="getNameList" resultType="String" parameterType="int">
+        select resource_name
+        from learning_resource
+        where college_name =
+                        (select college_name
+                         from teacher_users
+                         where user_id = #{userId})
+<!--        <where>-->
+<!--            <if test="userId != null">-->
+<!--                college_name =-->
+<!--                (select college_name-->
+<!--                 from teacher_users-->
+<!--                 where user_id = #{userId})-->
+<!--            </if>-->
+<!--        </where>-->
+    </select>
+
+    <select id="getList" resultType="com.project.demo.entity.LearningResource" parameterType="int">
+        select *
+        from learning_resource
+        <where>
+            <if test="userId != null and userId != ''">
+                college_id =
+                    (select college_information_id
+                    from college_information
+                    where college_name =
+                        (select college_name
+                        from student_users
+                        where user_id = #{userId}))
+                    or teacher_users = #{userId}
+            </if>
+        </where>
+        LIMIT ${startIndex},${size};
+    </select>
+</mapper>
