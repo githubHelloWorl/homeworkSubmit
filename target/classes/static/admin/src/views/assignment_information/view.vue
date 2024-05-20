@@ -143,7 +143,7 @@
 
 <script>
 import mixin from "@/mixins/page.js";
-import {getList, getListTestCollege, getListTestCourse} from "../../api/learning_resource/api";
+import {getList, getListTestCollege, getListTestCourse, getTestCollege} from "../../api/learning_resource/api";
 
 export default {
 	mixins: [mixin],
@@ -209,7 +209,6 @@ export default {
     async bbb() {
       // 得到学院
       await this.getCourseNameList();
-
     },
 
 		/**
@@ -237,12 +236,18 @@ export default {
 			var json = await this.$get("~/api/user_group/get_obj?name=教师用户");
 			if (json.result && json.result.obj) {
 				this.group_user_teacher_users = json.result.obj;
-        console.log("group_user_teacher_users = ")
-        console.log(this.group_user_teacher_users)
+        // console.log("group_user_teacher_users = ")
+        // console.log(this.group_user_teacher_users)
 			}
 			else if (json.error) {
 				console.error(json.error);
 			}
+
+      // console.log("fdsafdsafdsafds =")
+      // console.log(this.form)
+
+      // TODO
+      this.get_test_college();
 		},
 		get_user_session_teacher_users(id) {
 			var _this = this;
@@ -412,9 +417,21 @@ export default {
         });
 
         // this.college_name_list = result.data.result.list
-        console.log("this.college_name_list =")
-        console.log(this.college_name_list)
+        // console.log("this.college_name_list =")
+        // console.log(this.college_name_list)
       })
+    },
+
+    // TODO
+    async get_test_college() {
+      console.log("this.form.teacher_users, this.form.course_name =")
+      console.log(this.form)
+      console.log(this.form.teacher_users, this.form.course_name)
+      await getTestCollege(this.form.teacher_users, this.form.course_name).then((result) => {
+        this.form.college_name = result.data.result.list.at(0).college_name;
+        console.log("result.data.result.list.at(0).=")
+        console.log(result.data.result.list.at(0).college_name)
+      });
     }
 
 	},
@@ -424,8 +441,8 @@ export default {
     // console.log("list_user_teacher_users = ")
     // console.log(this.list_user_teacher_users)
 		// this.getCourseNameList();
-    // this.getCollegeNameList();
-	},
+    // this.getCollegeNameList()
+	}
 }
 </script>
 

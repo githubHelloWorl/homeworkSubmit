@@ -15,4 +15,6 @@ export function getListTestCollege(id){
 }
 
 // TODO
-
+export function getTestCollege(id, resource_name){
+    return axios.get("http://localhost:5000/api/learning_resource/get_list?teacher_users=" + id + "&resource_name=" + resource_name);
+}
